@@ -1,0 +1,35 @@
+﻿@page
+@model FruitCommerceDemo.Web.Pages.Shop.IndexModel
+@{
+}
+
+<h1>Online Store</h1>
+<form>
+    <div class="row">
+        @foreach (IProduct product in Model.Products)
+        {
+            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6">
+                <div class="card p-3">
+                    <img class="card-img-top" src="@product.ImageUrl" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">@product.Name</h5>
+                        <h6 class="card-title">@String.Format("{0:C2}", product.Price)</h6>
+                        <p class="card-text">@product.Description</p>
+                        <button class="btn btn-primary" asp-page="/Cart/AddProduct" formmethod="post" asp-route-productId="@product.ProductId">Add To Cart</button>
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+    @Html.AntiForgeryToken()
+</form>
+
+@section Scripts {
+<script>
+    $("form").submit(() => {
+        $(".loading").show();
+    })
+
+</script>
+}

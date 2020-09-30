@@ -6,6 +6,8 @@
     <title>@ViewData["Title"] - FruitCommerceDemoBrief.Web</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
 <body>
     <header>
@@ -22,13 +24,22 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Shop/Index">Shop</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Cart/Index">Shopping Cart</a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
+    <div class="loading">
+        <div class="overlay"></div>
+        <div class="overlay-spinner spinner-grow text-info" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
@@ -37,7 +48,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2020 - FruitCommerceDemoBrief.Web - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            &copy; 2020 - FruitCommerceDemoBrief.Web
         </div>
     </footer>
 

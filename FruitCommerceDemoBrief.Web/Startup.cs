@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using FruitCommerceDemoBrief.Web.Interfaces.Services;
+using FruitCommerceDemoBrief.Web.Middleware;
+using FruitCommerceDemoBrief.Web.Services;
 
 namespace FruitCommerceDemoBrief.Web
 {
@@ -29,6 +32,9 @@ namespace FruitCommerceDemoBrief.Web
             services.AddMemoryCache();
             services.AddSession();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSingleton<IProductService, ProductService>();
+            services.AddSingleton<ICouponService, CouponService>();
+            services.AddSingleton<IShoppingCartService, ShoppingCartService>();
 
         }
 
@@ -43,6 +49,8 @@ namespace FruitCommerceDemoBrief.Web
             {
                 app.UseExceptionHandler("/Error");
             }
+
+            app.UseRequestResponseLogging();
 
             app.UseStaticFiles();
 

@@ -23,14 +23,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (IShoppingCartItem item in Model.Cart.Items)
+                            @foreach (ShoppingCartItem item in Model.Cart.Items)
                             {
 
                                 <tr>
                                     <th class="pl-0 border-0" scope="row">
                                         <div class="media align-items-center">
-                                            <a class="reset-anchor d-block animsition-link" asp-page-" /Shop/ProductDetail" asp-route-productId="@item.Product.ProductId"><img src="~/img/@item.Product.ImageUrl" alt="..." width="70" /></a>
-                                            <div class="media-body ml-3"><strong class="h6"><a class="reset-anchor animsition-link" asp-page="/Shop/ProductDetail" asp-route-productId="item.Product.ProductId">@item.Product.Name</a></strong></div>
+                                            <a class="reset-anchor d-block animsition-link" asp-page="/Shop/ProductDetail" asp-route-productId="@item.Product.ProductId"><img src="~/img/@item.Product.ImageUrl" alt="..." width="70" /></a>
+                                            <div class="media-body ml-3"><strong class="h6"><a class="reset-anchor animsition-link" asp-page="/Shop/ProductDetail" asp-route-productId="@item.Product.ProductId">@item.Product.Name</a></strong></div>
                                         </div>
                                     </th>
                                     <td class="align-middle border-0">
@@ -62,7 +62,7 @@
                                     </td>
                                 </tr>
                             }
-                            @foreach (ICoupon coupon in Model.Cart.Coupons)
+                            @foreach (Coupon coupon in Model.Cart.Coupons)
                             {
                                 <tr>
                                     <th class="pl-0 border-0" scope="row">

@@ -135,7 +135,7 @@
                     <div class="card-body">
                         <h5 class="text-uppercase mb-4">Your order</h5>
                         <ul class="list-unstyled mb-0">
-                            @foreach (IShoppingCartItem item in Model.Cart.Items)
+                            @foreach (ShoppingCartItem item in Model.Cart.Items)
                             {
                                 <li class="d-flex align-items-center justify-content-between"><strong class="small font-weight-bold">@item.Product.Name</strong><span class="text-muted small">@String.Format("{0:C2}", item.GetSubtotal())</span></li>
                                 <li class="border-bottom my-2"></li>

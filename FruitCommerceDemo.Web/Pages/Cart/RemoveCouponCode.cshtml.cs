@@ -1,27 +1,24 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using FruitCommerceDemo.Web.Interfaces.Domain;
-using FruitCommerceDemo.Web.Interfaces.Services;
+using FruitCommerceDemo.BLL.Models;
+using FruitCommerceDemo.Web.Interfaces;
 
 namespace FruitCommerceDemo.Web.Pages.Cart
 {
     public class RemoveCouponCodeModel : PageModel
     {
-        private readonly IShoppingCartService _shoppingCartService;
-        public RemoveCouponCodeModel(IShoppingCartService shoppingCartService)
+        private readonly IFruitCommerceApplicationService _starzApplicationService;
+        public RemoveCouponCodeModel(IFruitCommerceApplicationService starzApplicationService)
         {
-            _shoppingCartService = shoppingCartService;
+            _starzApplicationService = starzApplicationService;
         }
         public void OnGet()
         {
         }
         public async Task<IActionResult> OnPostAsync(string couponCode)
         {
-            IShoppingCart cart = await _shoppingCartService.GetCartAsync();
+            ShoppingCart cart = await _starzApplicationService.GetShoppingCartAsync();
             await cart.RemoveCouponByCodeAsync(couponCode);
             return RedirectToPage("/Cart/Index");
         }

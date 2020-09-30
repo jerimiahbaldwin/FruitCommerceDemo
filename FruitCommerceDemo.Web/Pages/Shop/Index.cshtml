@@ -1,6 +1,6 @@
 ﻿@page
 @model FruitCommerceDemo.Web.Pages.Shop.IndexModel
-@using FruitCommerceDemo.Web.Models
+@using FruitCommerceDemo.BLL.Models
 @{
 }
 <form>
@@ -130,7 +130,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            @foreach (IProduct product in Model.Products)
+                            @foreach (Product product in Model.Products)
                             {
                                 <!-- PRODUCT-->
                                 <div class="col-lg-4 col-sm-6">

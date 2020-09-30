@@ -1,29 +1,22 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
-using FruitCommerceDemo.Web.Interfaces.Domain;
-using FruitCommerceDemo.Web.Interfaces.Services;
+using FruitCommerceDemo.BLL.Models;
+using FruitCommerceDemo.Web.Interfaces;
 
 namespace FruitCommerceDemo.Web.Pages.Cart
 {
     public class CheckoutModel : PageModel
     {
-        private readonly ILogger<CheckoutModel> _logger;
-        private readonly IShoppingCartService _shoppingCartService;
-        private IShoppingCart _cart;
-        public CheckoutModel(ILogger<CheckoutModel> logger, IShoppingCartService shoppingCartService)
+        private readonly IFruitCommerceApplicationService _starzApplicationService;
+        private ShoppingCart _cart { get; set; }
+        public CheckoutModel(IFruitCommerceApplicationService starzApplicationService)
         {
-            _logger = logger;
-            _shoppingCartService = shoppingCartService;
+            _starzApplicationService = starzApplicationService;
         }
         public async Task OnGetAsync()
         {
-            _cart = await _shoppingCartService.GetCartAsync();
+            _cart = await _starzApplicationService.GetShoppingCartAsync();
         }
-        public IShoppingCart Cart { get { return _cart; } }
+        public ShoppingCart Cart { get { return _cart; } }
     }
 }

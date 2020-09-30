@@ -1,39 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
-using FruitCommerceDemo.Web.Interfaces.Domain;
-using FruitCommerceDemo.Web.Interfaces.Services;
+using FruitCommerceDemo.BLL.Models;
+using FruitCommerceDemo.Web.Interfaces;
 
 namespace FruitCommerceDemo.Web.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly IProductService _productService;
-        public IndexModel(IProductService productService)
+        private readonly IFruitCommerceApplicationService _starzApplicationService;
+        public IndexModel(IFruitCommerceApplicationService starzApplicationService)
         {
-            _productService = productService;
+            _starzApplicationService = starzApplicationService;
         }
         public async Task OnGetAsync()
         {
-            Products = await _productService.GetAllAsync();
-            ProductsTopTrending = new List<IProduct> {
-                await _productService.GetAsync(2),
-                await _productService.GetAsync(4),
-                await _productService.GetAsync(6),
-                await _productService.GetAsync(8),
-                await _productService.GetAsync(10),
-                await _productService.GetAsync(11),
-                await _productService.GetAsync(12),
-                await _productService.GetAsync(13),
-            };
+            Products = await _starzApplicationService.ContextBLL.Products.GetAllAsync();
+            ProductsTopTrending = await _starzApplicationService.ContextBLL.Products.GetTopTrendingAsync();
         }
-        public IEnumerable<IProduct> Products { get; private set; } = new List<IProduct>();
-        public IEnumerable<IProduct> ProductsTopTrending { get; private set; } = new List<IProduct>();
+        public IEnumerable<Product> Products { get; private set; } = new List<Product>();
+        public IEnumerable<Product> ProductsTopTrending { get; private set; } = new List<Product>();
 
     }
 }

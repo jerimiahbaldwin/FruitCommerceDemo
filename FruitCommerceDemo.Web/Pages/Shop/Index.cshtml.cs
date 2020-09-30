@@ -1,26 +1,22 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using FruitCommerceDemo.Web.Interfaces.Domain;
-using FruitCommerceDemo.Web.Interfaces.Services;
+using FruitCommerceDemo.BLL.Models;
+using FruitCommerceDemo.Web.Interfaces;
 
 namespace FruitCommerceDemo.Web.Pages.Shop
 {
     public class IndexModel : PageModel
     {
-        private readonly IProductService _productService;
-
-        public IndexModel(IProductService productService)
+        private readonly IFruitCommerceApplicationService _starzApplicationService;
+        public IndexModel(IFruitCommerceApplicationService starzApplicationService)
         {
-            _productService = productService;
+            _starzApplicationService = starzApplicationService;
         }
         public async Task OnGetAsync()
         {
-            Products = await _productService.GetAllAsync();
+            Products = await _starzApplicationService.ContextBLL.Products.GetAllAsync();
         }
-        public IEnumerable<IProduct> Products { get; private set; } = new List<IProduct>();
+        public IEnumerable<Product> Products { get; private set; } = new List<Product>();
     }
 }

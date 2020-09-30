@@ -2,123 +2,142 @@
 @model FruitCommerceDemo.Web.Pages.Cart.IndexModel
 @{
 }
-<div class="col-lg-12 pl-3 pt-3">
+
+<section class="py-5">
+    <h2 class="h5 text-uppercase mb-4">Shopping cart</h2>
     @if (Model.Cart.Items.Count() > 0)
     {
-        <table class="table table-hover border bg-white">
-            <thead>
-                <tr>
-                    <th>Product</th>
-                    <th>Price</th>
-                    <th style="width:10%;">Quantity</th>
-                    <th>Subtotal</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (IShoppingCartItem item in Model.Cart.Items)
-                {
-                    <tr>
-                        <td>
-                            <div class="row">
-                                <div class="col-lg-2 Product-img">
-                                    <img src="@item.Product.ImageUrl" alt="@item.Product.Name" class="img-responsive" />
-                                </div>
-                                <div class="col-lg-10">
-                                    <h4 class="nomargin">@item.Product.Name</h4>
-                                    <p>
-                                        @item.Product.Description
-                                    </p>
-                                </div>
-                            </div>
-                        </td>
-                        <td> @String.Format("{0:C2}", item.Product.Price) </td>
-                        <td data-th="Quantity">
-                            <form asp-page="/Cart/UpdateProductQuantity" method="post">
-                                <input type="hidden" name="productId" value="@item.Product.ProductId" />
-                                <input type="number" class="form-control text-center product-quantity" name="quantity" value="@item.Quantity">
-                                @Html.AntiForgeryToken()
 
-                            </form>
-                        </td>
-                        <td>@String.Format("{0:C2}", item.GetSubtotal())</td>
-                        <td class="actions" data-th="" style="width:10%;">
-                            <form>
-                                <button class="btn btn-danger btn-sm" asp-page="/Cart/RemoveProduct" formmethod="post" name="productId" value="@item.Product.ProductId"><i class="fa fa-trash-o"></i></button>
-                                @Html.AntiForgeryToken()
-                            </form>
-                        </td>
-                    </tr>
-                }
-                @if (Model.Cart.Coupons.Count() > 0)
-                {
-                    foreach (ICoupon coupon in Model.Cart.Coupons)
-                    {
-                        <tr>
-                            <td>
-                                <div class="row">
-                                    <div class="col-lg-2 Product-img">
-                                        <img src="https://ps.w.org/wp-coupons-and-deals/assets/icon-256x256.png?rev=1974447" alt="discount" class="img-responsive" />
+        <div class="row">
+            <div class="col-lg-8 mb-4 mb-lg-0">
+                <!-- CART TABLE-->
+                <div class="table-responsive mb-4">
+                    <table class="table">
+                        <thead class="bg-light">
+                            <tr>
+                                <th class="border-0" scope="col"> <strong class="text-small text-uppercase">Product</strong></th>
+                                <th class="border-0" scope="col"> <strong class="text-small text-uppercase">Price</strong></th>
+                                <th class="border-0" scope="col"> <strong class="text-small text-uppercase">Quantity</strong></th>
+                                <th class="border-0" scope="col"> <strong class="text-small text-uppercase">Total</strong></th>
+                                <th class="border-0" scope="col"> </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (IShoppingCartItem item in Model.Cart.Items)
+                            {
+
+                                <tr>
+                                    <th class="pl-0 border-0" scope="row">
+                                        <div class="media align-items-center">
+                                            <a class="reset-anchor d-block animsition-link" asp-page-" /Shop/ProductDetail" asp-route-productId="@item.Product.ProductId"><img src="~/img/@item.Product.ImageUrl" alt="..." width="70" /></a>
+                                            <div class="media-body ml-3"><strong class="h6"><a class="reset-anchor animsition-link" asp-page="/Shop/ProductDetail" asp-route-productId="item.Product.ProductId">@item.Product.Name</a></strong></div>
+                                        </div>
+                                    </th>
+                                    <td class="align-middle border-0">
+                                        <p class="mb-0 small">@String.Format("{0:C2}", item.Product.Price)</p>
+                                    </td>
+                                    <td class="align-middle border-0">
+                                        <form asp-page="/Cart/UpdateProductQuantity" method="post">
+                                            <input type="hidden" name="productId" value="@item.Product.ProductId" />
+                                            <div class="border d-flex align-items-center justify-content-between px-3">
+                                                <span class="small text-uppercase text-gray headings-font-family">Quantity</span>
+                                                <div class="quantity">
+                                                    <button class="dec-btn p-0" type="button"><i class="fas fa-caret-left"></i></button>
+                                                    <input class="form-control form-control-sm border-0 shadow-0 p-0 product-quantity" name="quantity" type="text" value="@item.Quantity" />
+                                                    <button class="inc-btn p-0" type="button"><i class="fas fa-caret-right"></i></button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </td>
+                                    <td class="align-middle border-0">
+                                        <p class="mb-0 small">@String.Format("{0:C2}", item.GetSubtotal())</p>
+                                    </td>
+                                    <td class="align-middle border-0">
+                                        <form>
+                                            <button asp-page="/Cart/RemoveProduct" formmethod="post" name="productId" value="@item.Product.ProductId">
+                                                <i class="fas fa-trash-alt small text-muted"></i>
+                                            </button>
+                                            @Html.AntiForgeryToken()
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                            @foreach (ICoupon coupon in Model.Cart.Coupons)
+                            {
+                                <tr>
+                                    <th class="pl-0 border-0" scope="row">
+                                        <div class="media align-items-center">
+                                            <a class="reset-anchor d-block animsition-link" href="#">
+                                                <img src="https://ps.w.org/wp-coupons-and-deals/assets/icon-256x256.png?rev=1974447" alt="discount" class="img-responsive" width="70"/>
+                                            </a>
+                                            <div class="media-body ml-3"><strong class="h6"><a class="reset-anchor animsition-link" href="#">@coupon.Code</a></strong></div>
+                                        </div>
+                                    </th>
+                                    <td class="align-middle border-0" colspan="3">
+                                        @String.Format("{0:P0}", coupon.DiscountPercent) off select items.
+                                    </td>
+                                    <td class="align-middle border-0">
+                                        <form asp-page="RemoveCouponCode" method="post">
+                                            <button name="couponCode" value="@coupon.Code">
+                                                <i class="fas fa-trash-alt small text-muted"></i>
+                                            </button>
+                                            @Html.AntiForgeryToken()
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+                <!-- CART NAV-->
+                <div class="bg-light px-4 py-3">
+                    <div class="row align-items-center text-center">
+                        <div class="col-md-6 mb-3 mb-md-0 text-md-left"><a class="btn btn-link p-0 text-dark btn-sm" asp-page="/Shop/Index"><i class="fas fa-long-arrow-alt-left mr-2"> </i>Continue shopping</a></div>
+                        <div class="col-md-6 text-md-right"><a class="btn btn-outline-dark btn-sm" asp-page="/Cart/Checkout">Procceed to checkout<i class="fas fa-long-arrow-alt-right ml-2"></i></a></div>
+                    </div>
+                </div>
+            </div>
+            <!-- ORDER TOTAL-->
+            <div class="col-lg-4">
+                <div class="card border-0 rounded-0 p-lg-4 bg-light">
+                    <div class="card-body">
+                        <h5 class="text-uppercase mb-4">Cart total</h5>
+                        <ul class="list-unstyled mb-0">
+                            <li class="d-flex align-items-center justify-content-between"><strong class="text-uppercase small font-weight-bold">Subtotal</strong><span class="text-muted small">@String.Format("{0:C2}", Model.Cart.GetSubtotal())</span></li>
+                            <li class="border-bottom my-2"></li>
+                            <li class="d-flex align-items-center justify-content-between mb-4"><strong class="text-uppercase small font-weight-bold">Discounts</strong><span class="text-muted small">@String.Format("{0:C2}", Model.Cart.GetDiscountTotal())</span></li>
+                            <li class="border-bottom my-2"></li>
+                            <li class="d-flex align-items-center justify-content-between mb-4"><strong class="text-uppercase small font-weight-bold">Total</strong><span>@String.Format("{0:C2}", Model.Cart.GetTotal())</span></li>
+                            <li>
+                                <form asp-page="AddCouponCode" method="post">
+                                    <div class="form-group mb-0">
+                                        <input class="form-control" type="text" name="couponCode" placeholder="Enter your coupon">
+                                        <button class="btn btn-dark btn-sm btn-block" type="submit"> <i class="fas fa-gift mr-2"></i>Apply coupon</button>
                                     </div>
-                                    <div class="col-lg-10">
-                                        <h4 class="nomargin">Savings</h4>
-                                        <p>
-                                            @coupon.Code
-                                        </p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td colspan="3" class="text-right"> @String.Format("{0:P0}", coupon.DiscountPercent) </td>
-                            <td class="actions" data-th="" style="width:10%;">
-                                <form asp-page="RemoveCouponCode" method="post">
-                                    <button class="btn btn-danger btn-sm" name="couponCode" value="@coupon.Code"><i class="fa fa-trash-o"></i></button>
                                     @Html.AntiForgeryToken()
                                 </form>
-                            </td>
-                        </tr>
-                    }
-                }
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="5" class="hidden-xs text-right" style="width:10%;">
-                        <form asp-page="AddCouponCode" method="post">
-                            <strong>Coupon Code : </strong>
-                            <input type="text" name="couponCode" />
-                            <button class="btn-primary">Apply</button>
-                            @Html.AntiForgeryToken()
-                        </form>
-                        Hint: use ORANGEUGR8
-                    </td>
-                </tr>
-                @if (Model.CouponError != null)
-                {
-                    <tr>
-                        <td colspan="5" class="hidden-xs text-right" style="width:10%;">
-                            <div class="alert alert-warning" role="alert">
-                                @Model.CouponError
-                            </div>
-                        </td>
-                    </tr>
-                }
-                <tr>
-                    <td colspan="5" class="hidden-xs text-right" style="width:10%;"><strong>Subtotal : @String.Format("{0:C2}", Model.Cart.GetSubtotal()) </strong></td>
-                </tr>
-                <tr>
-                    <td colspan="5" class="hidden-xs text-right" style="width:10%;"><strong>Discounts : @String.Format("{0:C2}", Model.Cart.GetDiscountTotal()) </strong></td>
-                </tr>
-                <tr>
-                    <td colspan="2"><a class="btn btn-warning text-white" asp-area="" asp-page="/Shop/Index"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
-                    <td colspan="3" class="hidden-xs text-right" style="width:10%;"><strong>Total : @String.Format("{0:C2}", Model.Cart.GetTotal()) </strong></td>
-                </tr>
-            </tfoot>
-        </table>
+                                @if (Model.CouponError != null)
+                                {
+                                    <div class="alert alert-warning" role="alert">
+                                        @Model.CouponError
+                                    </div>
+                                }
+                                <div>Hint: use ORANGEUGR8</div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
     }
     else
     {
         <div>No items here.</div>
     }
-</div>
+
+</section>
+
 
 @section Scripts {
     <script src="~/lib/debounce/debounce.js"></script>

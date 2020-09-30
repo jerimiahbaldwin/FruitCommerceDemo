@@ -12,15 +12,15 @@ namespace FruitCommerceDemo.Web.Pages.Shop
     public class IndexModel : PageModel
     {
         private readonly IProductService _productService;
-        private IEnumerable<IProduct> _products = new List<IProduct>();
+
         public IndexModel(IProductService productService)
         {
             _productService = productService;
         }
         public async Task OnGetAsync()
         {
-            _products = await _productService.GetAllAsync();
+            Products = await _productService.GetAllAsync();
         }
-        public IEnumerable<IProduct> Products { get { return _products; } }
+        public IEnumerable<IProduct> Products { get; private set; } = new List<IProduct>();
     }
 }

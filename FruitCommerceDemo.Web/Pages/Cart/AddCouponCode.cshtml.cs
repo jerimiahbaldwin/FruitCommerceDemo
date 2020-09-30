@@ -29,7 +29,7 @@ namespace FruitCommerceDemo.Web.Pages.Cart
             }
             catch (ArgumentException e)
             {
-                return RedirectToPage("/Cart/Index", new { couponError = e.Message });
+                return RedirectToPage("/Cart/Index", new { couponError = e.Message});
             }
         }
     }
